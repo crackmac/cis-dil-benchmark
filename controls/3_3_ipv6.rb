@@ -30,7 +30,7 @@ control 'cis-dil-benchmark-3.3.1' do
 
     %w(/boot/grub/grub.conf /boot/grub/grub.cfg /boot/grub/menu.lst /boot/boot/grub/grub.conf /boot/boot/grub/grub.cfg /boot/boot/grub/menu.lst).each do |f|
       grub_file = file(f)
-      if !grub_file.content.nil? && grub_file.content.match(/ipv6\.disable=1/)
+      if grub_file.exist? && !grub_file.content.nil? && grub_file.content.match(/ipv6\.disable=1/)
         ipv6_enabled = false
         break
       end
@@ -60,7 +60,7 @@ control 'cis-dil-benchmark-3.3.2' do
 
     %w(/boot/grub/grub.conf /boot/grub/grub.cfg /boot/grub/menu.lst /boot/boot/grub/grub.conf /boot/boot/grub/grub.cfg /boot/boot/grub/menu.lst).each do |f|
       grub_file = file(f)
-      if !grub_file.content.nil? && grub_file.content.match(/ipv6\.disable=1/)
+      if grub_file.exist? && !grub_file.content.nil? && grub_file.content.match(/ipv6\.disable=1/)
         ipv6_enabled = false
         break
       end
@@ -87,8 +87,11 @@ control 'cis-dil-benchmark-3.3.3' do
 
   describe.one do
     %w(/boot/grub/grub.conf /boot/grub/grub.cfg /boot/grub/menu.lst /boot/boot/grub/grub.conf /boot/boot/grub/grub.cfg /boot/boot/grub/menu.lst).each do |f|
-      describe file(f) do
-        its(:content) { should match(/ipv6\.disable=1/) }
+      grub_file = file(f)
+      if grub_file.exist? && !grub_file.content.nil?
+        describe grub_file do
+          its(:content) { should match(/ipv6\.disable=1/) }
+        end
       end
     end
   end

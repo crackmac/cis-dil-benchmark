@@ -27,13 +27,15 @@ control 'cis-dil-benchmark-1.3.1' do
   tag level: 1
 
   describe.one do
-    describe package('aide') do
-      it { should be_installed }
-    end
+    skip 'Not required for MSB'
 
-    describe command('aide') do
-      it { should exist }
-    end
+    # describe package('aide') do
+    #   it { should be_installed }
+    # end
+
+    # describe command('aide') do
+    #   it { should exist }
+    # end
   end
 end
 
@@ -44,6 +46,10 @@ control 'cis-dil-benchmark-1.3.2' do
 
   tag cis: 'distribution-independent-linux:1.3.2'
   tag level: 1
+
+  only_if do
+    package('aide').installed? || command('aide').exist?
+  end
 
   describe.one do
     %w(/var/spool/cron/crontabs/root /var/spool/cron/root /etc/crontab).each do |f|
