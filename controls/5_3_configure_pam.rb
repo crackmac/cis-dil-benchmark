@@ -25,37 +25,37 @@ control 'cis-dil-benchmark-5.3.1' do # rubocop:disable Metrics/BlockLength
   tag cis: 'distribution-independent-linux:5.3.1'
   tag level: 1
 
+  %w(common-password system-auth).each do |f|
+    if file("/etc/pam.d/#{f}").exist?
+      pam_file = "/etc/pam.d/#{f}"
+    end
+  end
+
   if package('pam_cracklib').installed?
     describe.one do
-      %w(common-password system-auth).each do |f|
-        describe file("/etc/pam.d/#{f}") do
-          its(:content) { should match(/^password required pam_cracklib\.so (\S+\s+)*try_first_pass/) }
-          its(:content) { should match(/^password required pam_cracklib\.so (\S+\s+)*retry=[3210]/) }
-        end
+      describe file(pam_file) do
+        its(:content) { should match(/^password required pam_cracklib\.so (\S+\s+)*try_first_pass/) }
+        its(:content) { should match(/^password required pam_cracklib\.so (\S+\s+)*retry=[3210]/) }
       end
     end
 
     describe.one do
-      %w(common-password system-auth).each do |f|
-        describe file("/etc/pam.d/#{f}") do
-          its(:content) { should match(/^password required pam_cracklib\.so (\S+\s+)*minlen=(1[4-9]|[2-9][0-9]|[1-9][0-9][0-9]+)/) }
-          its(:content) { should match(/^password required pam_cracklib\.so (\S+\s+)*dcredit=-[1-9][0-9]*\s*(?:#.*)?/) }
-          its(:content) { should match(/^password required pam_cracklib\.so (\S+\s+)*lcredit=-[1-9][0-9]*\s*(?:#.*)?/) }
-          its(:content) { should match(/^password required pam_cracklib\.so (\S+\s+)*ucredit=-[1-9][0-9]*\s*(?:#.*)?/) }
-          its(:content) { should match(/^password required pam_cracklib\.so (\S+\s+)*ocredit=-[1-9][0-9]*\s*(?:#.*)?/) }
-        end
+      describe file(pam_file) do
+        its(:content) { should match(/^password required pam_cracklib\.so (\S+\s+)*minlen=(1[4-9]|[2-9][0-9]|[1-9][0-9][0-9]+)/) }
+        its(:content) { should match(/^password required pam_cracklib\.so (\S+\s+)*dcredit=-[1-9][0-9]*\s*(?:#.*)?/) }
+        its(:content) { should match(/^password required pam_cracklib\.so (\S+\s+)*lcredit=-[1-9][0-9]*\s*(?:#.*)?/) }
+        its(:content) { should match(/^password required pam_cracklib\.so (\S+\s+)*ucredit=-[1-9][0-9]*\s*(?:#.*)?/) }
+        its(:content) { should match(/^password required pam_cracklib\.so (\S+\s+)*ocredit=-[1-9][0-9]*\s*(?:#.*)?/) }
       end
     end
   end
 
   if package('pam_passwdqc').installed? || package('libpwquality').installed?
     describe.one do
-      %w(common-password system-auth).each do |f|
-        describe file("/etc/pam.d/#{f}") do
+        describe file(pam_file) do
           its(:content) { should match(/^password requisite pam_pwquality\.so (\S+\s+)*retry=[3210]/) }
           its(:content) { should match(/^password requisite pam_pwquality\.so (\S+\s+)*try_first_pass/) }
         end
-      end
     end
 
     describe file('/etc/security/pwquality.conf') do
@@ -89,15 +89,19 @@ control 'cis-dil-benchmark-5.3.3' do
   tag cis: 'distribution-independent-linux:5.3.3'
   tag level: 1
 
-  describe.one do
-    %w(common-password system-auth).each do |f|
-      describe file("/etc/pam.d/#{f}") do
-        its(:content) { should match(/^password (\S+\s+)+pam_unix\.so (\S+\s+)*remember=([56789]|[1-9][0-9]+)/) }
-      end
+  %w(common-password system-auth).each do |f|
+    if file("/etc/pam.d/#{f}").exist?
+      pam_file = "/etc/pam.d/#{f}"
+    end
+  end
 
-      describe file("/etc/pam.d/#{f}") do
-        its(:content) { should match(/^password (\S+\s+)+pam_pwhistory\.so (\S+\s+)*remember=([56789]|[1-9][0-9]+)/) }
-      end
+  describe.one do
+    describe file(pam_file) do
+      its(:content) { should match(/^password (\S+\s+)+pam_unix\.so (\S+\s+)*remember=([56789]|[1-9][0-9]+)/) }
+    end
+
+    describe file(pam_file) do
+      its(:content) { should match(/^password (\S+\s+)+pam_pwhistory\.so (\S+\s+)*remember=([56789]|[1-9][0-9]+)/) }
     end
   end
 end
@@ -112,8 +116,10 @@ control 'cis-dil-benchmark-5.3.4' do
 
   describe.one do
     %w(common-password system-auth password-auth).each do |f|
-      describe file("/etc/pam.d/#{f}") do
-        its(:content) { should match(/^password(\s+\S+\s+)+pam_unix\.so\s+(\S+\s+)*sha512/) }
+      if file("/etc/pam.d/#{f}").exist?
+        describe file("/etc/pam.d/#{f}") do
+          its(:content) { should match(/^password(\s+\S+\s+)+pam_unix\.so\s+(\S+\s+)*sha512/) }
+        end
       end
     end
   end
