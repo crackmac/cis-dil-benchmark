@@ -32,7 +32,8 @@ control 'cis-dil-benchmark-5.4.1.1' do
   tag level: 1
 
   describe login_defs do
-    its('PASS_MAX_DAYS') { should cmp <= 90 }
+    skip 'Not required for MSB'
+    # its('PASS_MAX_DAYS') { should cmp <= 90 }
   end
 
   shadow_files.each do |f|
