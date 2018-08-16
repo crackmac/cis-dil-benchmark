@@ -27,16 +27,18 @@ control 'cis-dil-benchmark-1.4.1' do
 
   describe.one do
     %w(/boot/grub/grub.conf /boot/grub/grub.cfg /boot/grub/menu.lst /boot/boot/grub/grub.conf /boot/boot/grub/grub.cfg /boot/boot/grub/menu.lst /boot/grub2/grub.cfg).each do |f|
-      describe file(f) do
-        it { should exist }
-        it { should_not be_readable.by 'group' }
-        it { should_not be_writable.by 'group' }
-        it { should_not be_executable.by 'group' }
-        it { should_not be_readable.by 'other' }
-        it { should_not be_writable.by 'other' }
-        it { should_not be_executable.by 'other' }
-        its(:gid) { should cmp 0 }
-        its(:uid) { should cmp 0 }
+      if file(f).exist?
+        describe file(f) do
+          it { should exist }
+          it { should_not be_readable.by 'group' }
+          it { should_not be_writable.by 'group' }
+          it { should_not be_executable.by 'group' }
+          it { should_not be_readable.by 'other' }
+          it { should_not be_writable.by 'other' }
+          it { should_not be_executable.by 'other' }
+          its(:gid) { should cmp 0 }
+          its(:uid) { should cmp 0 }
+        end
       end
     end
   end
