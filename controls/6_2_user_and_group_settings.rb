@@ -68,7 +68,7 @@ control 'cis-dil-benchmark-6.2.3' do
 
   shadow_files.each do |f|
     describe shadow(f) do
-      its(:users) { should_not include '+' }
+      its(:user) { should_not include '+' }
     end
   end
 end
