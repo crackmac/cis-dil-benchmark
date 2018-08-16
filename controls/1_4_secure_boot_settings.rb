@@ -56,6 +56,7 @@ control 'cis-dil-benchmark-1.4.2' do
     %w(/boot/grub/grub.conf /boot/grub/grub.cfg /boot/grub/menu.lst /boot/boot/grub/grub.conf /boot/boot/grub/grub.cfg /boot/boot/grub/menu.lst /boot/grub/grub.cfg).each do |f|
       if file(f).exist?
         describe file(f) do
+          skip 'Not required for MSB'
           its(:content) { should match(/^set superusers/) }
           its(:content) { should match(/^password/) }
         end
@@ -78,12 +79,16 @@ control 'cis-dil-benchmark-1.4.3' do
       its(:password) { should_not include('!') }
     end
 
-    describe file('/etc/inittab') do
-      its(:content) { should match(%r{^~~:S:respawn:/sbin/sulogin}) }
-    end
+    if file('/etc/inittab').exist? 
+      describe file('/etc/inittab') do
+        its(:content) { should match(%r{^~~:S:respawn:/sbin/sulogin}) }
+      end
+    end 
 
-    describe file('/etc/sysconfig/init') do
-      its(:content) { should match(%r{^SINGLE=/sbin/sulogin$}) }
+    if file('/etc/sysconfig/init').exist? 
+      describe file('/etc/sysconfig/init') do
+        its(:content) { should match(%r{^SINGLE=/sbin/sulogin$}) }
+      end
     end
   end
 end
