@@ -41,7 +41,7 @@ control 'cis-dil-benchmark-5.4.1.1' do
 
       describe user do
         skip 'Not required for MSB'
-        its(:max_days) { should cmp <= 90 }
+        # its(:max_days) { should cmp <= 90 }
       end
     end
   end
@@ -57,7 +57,7 @@ control 'cis-dil-benchmark-5.4.1.2' do
 
   describe login_defs do
     skip 'Not required for MSB'
-    its('PASS_MIN_DAYS') { should cmp >= 7 }
+    # its('PASS_MIN_DAYS') { should cmp >= 7 }
   end
 
   shadow_files.each do |f|

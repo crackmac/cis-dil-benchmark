@@ -243,10 +243,11 @@ control 'cis-dil-benchmark-5.2.15' do
   tag level: 1
 
   describe.one do
+    skip 'Not required for MSB'
     %w(AllowUsers AllowGroups DenyUsers DenyGroups).each do |p|
-      describe sshd_config do
-        its(p) { should_not be_nil }
-      end
+      # describe sshd_config do
+      #   its(p) { should_not be_nil }
+      # end
     end
   end
 end
