@@ -26,22 +26,25 @@ control 'cis-dil-benchmark-2.2.1.1' do
   tag level: 1
 
   describe.one do
-    skip 'Not required for MSB'
-    # describe package('ntp') do
-    #   it { should be_installed }
-    # end
+    describe package('ntp') do
+      skip 'Not required for MSB'
+      # it { should be_installed }
+    end
 
-    # describe command('ntpd') do
-    #   it { should exist }
-    # end
+    describe command('ntpd') do
+      skip 'Not required for MSB'
+      # it { should exist }
+    end
 
-    # describe package('chrony') do
-    #   it { should be_installed }
-    # end
+    describe package('chrony') do
+      skip 'Not required for MSB'
+      # it { should be_installed }
+    end
 
-    # describe command('chronyd') do
-    #   it { should exist }
-    # end
+    describe command('chronyd') do
+      skip 'Not required for MSB'
+      # it { should exist }
+    end
   end
 end
 

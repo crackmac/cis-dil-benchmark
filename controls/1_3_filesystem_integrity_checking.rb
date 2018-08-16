@@ -27,15 +27,15 @@ control 'cis-dil-benchmark-1.3.1' do
   tag level: 1
 
   describe.one do
-    skip 'Not required for MSB'
+    describe package('aide') do
+      skip 'Not required for MSB'
+      # it { should be_installed }
+    end
 
-    # describe package('aide') do
-    #   it { should be_installed }
-    # end
-
-    # describe command('aide') do
-    #   it { should exist }
-    # end
+    describe command('aide') do
+      skip 'Not required for MSB'
+      # it { should exist }
+    end
   end
 end
 

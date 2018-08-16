@@ -40,13 +40,14 @@ control 'cis-dil-benchmark-3.6.2' do
 
   %w(INPUT OUTPUT FORWARD).each do |chain|
     describe.one do
-      skip 'Not required for MSB'
-      # describe iptables do
-      #   it { should have_rule("-P #{chain} DROP") }
-      # end
-      # describe iptables do
-      #   it { should have_rule("-P #{chain} REJECT") }
-      # end
+      describe iptables do
+        skip 'Not required for MSB'
+        # it { should have_rule("-P #{chain} DROP") }
+      end
+      describe iptables do
+        skip 'Not required for MSB'
+        # it { should have_rule("-P #{chain} REJECT") }
+      end
     end
   end
 end
@@ -94,8 +95,9 @@ control 'cis-dil-benchmark-3.6.5' do
 
   port.where { address !~ /^(127\.0\.0\.1|::1)$/ }.ports.each do |port|
     describe "Firewall rule should exist for port #{port}" do
-      subject { iptables.retrieve_rules.any? { |s| s =~ /\s+--dport #{port}\s+/ } }
-      it { should be true }
+      skip 'Not required for MSB'
+      # subject { iptables.retrieve_rules.any? { |s| s =~ /\s+--dport #{port}\s+/ } }
+      # it { should be true }
     end
   end
 end
