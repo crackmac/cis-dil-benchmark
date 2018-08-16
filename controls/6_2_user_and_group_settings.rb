@@ -38,7 +38,7 @@ control 'cis-dil-benchmark-6.2.1' do
 
   shadow_files.each do |f|
     describe shadow(f) do
-      its(:passwords) { should_not include '' }
+      its(:password) { should_not include '' }
     end
   end
 end
@@ -368,7 +368,7 @@ control 'cis-dil-benchmark-6.2.20' do
 
   group_files.each do |f|
     describe etc_group(f).where(name: 'shadow') do
-      its(:users) { should be_empty }
+      its(:user) { should be_empty }
     end
   end
 end
