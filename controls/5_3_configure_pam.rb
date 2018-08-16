@@ -91,18 +91,16 @@ control 'cis-dil-benchmark-5.3.3' do
 
   %w(common-password system-auth).each do |f|
     if file("/etc/pam.d/#{f}").exist?
-      pam_file = "/etc/pam.d/#{f}"
-    end
-  end
-
-  describe.one do
-    describe file(pam_file) do
-      its(:content) { should match(/^password(.*)pam_unix\.so(.*)remember=([56789]|[1-9][0-9]+)/) }
-    end
-
-    describe file(pam_file) do
-      skip 'we do not use pam_pwhistory'
-      its(:content) { should match(/^password(.*)pam_unix\.so(.*)remember=([56789]|[1-9][0-9]+)/) }
+      describe.one do
+        describe file("/etc/pam.d/#{f}") do
+          its(:content) { should match(/^password(.*)pam_unix\.so(.*)remember=([56789]|[1-9][0-9]+)/) }
+        end
+    
+        describe file("/etc/pam.d/#{f}") do
+          skip 'we do not use pam_pwhistory'
+          its(:content) { should match(/^password(.*)pam_unix\.so(.*)remember=([56789]|[1-9][0-9]+)/) }
+        end
+      end
     end
   end
 end
