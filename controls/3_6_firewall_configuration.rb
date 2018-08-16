@@ -40,7 +40,7 @@ control 'cis-dil-benchmark-3.6.2' do
 
   %w(INPUT OUTPUT FORWARD).each do |chain|
     describe.one do
-      skip 'NR for MSB'
+      skip 'Not required for MSB'
       describe iptables do
         it { should have_rule("-P #{chain} DROP") }
       end
@@ -60,7 +60,7 @@ control 'cis-dil-benchmark-3.6.3' do
   tag level: 1
 
   describe iptables do
-    skip 'NR for MSB'
+    skip 'Not required for MSB'
     it { should have_rule('-A INPUT -i lo -j ACCEPT') }
     it { should have_rule('-A OUTPUT -o lo -j ACCEPT') }
     it { should have_rule('-A INPUT -s 127.0.0.0/8 -j DROP') }
@@ -77,7 +77,7 @@ control 'cis-dil-benchmark-3.6.4' do
 
   %w(tcp udp icmp).each do |proto|
     describe iptables do
-      skip 'NR for MSB'
+      skip 'Not required for MSB'
       it { should have_rule("-A OUTPUT -p #{proto} -m state --state NEW,ESTABLISHED -j ACCEPT") }
       it { should have_rule("-A INPUT -p #{proto} -m state --state ESTABLISHED -j ACCEPT") }
     end

@@ -56,6 +56,7 @@ control 'cis-dil-benchmark-3.4.3' do
   tag level: 1
 
   describe file('/etc/hosts.deny') do
+    skip 'Not required for MSB'
     its(:content) { should match(/^ALL: ALL/) }
   end
 end

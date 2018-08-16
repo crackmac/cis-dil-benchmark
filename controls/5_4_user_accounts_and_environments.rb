@@ -40,6 +40,7 @@ control 'cis-dil-benchmark-5.4.1.1' do
       next if (user.password && %w(* !)).any?
 
       describe user do
+        skip 'Not required for MSB'
         its(:max_days) { should cmp <= 90 }
       end
     end
@@ -55,6 +56,7 @@ control 'cis-dil-benchmark-5.4.1.2' do
   tag level: 1
 
   describe login_defs do
+    skip 'Not required for MSB'
     its('PASS_MIN_DAYS') { should cmp >= 7 }
   end
 

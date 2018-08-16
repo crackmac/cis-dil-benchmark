@@ -97,7 +97,7 @@ control 'cis-dil-benchmark-5.3.3' do
         end
     
         describe file("/etc/pam.d/#{f}") do
-          skip 'we do not use pam_pwhistory'
+          skip 'Not required for MSB'
           its(:content) { should match(/^password(.*)pam_unix\.so(.*)remember=([56789]|[1-9][0-9]+)/) }
         end
       end

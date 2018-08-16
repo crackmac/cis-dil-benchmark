@@ -82,7 +82,7 @@ control 'cis-dil-benchmark-4.2.1.4' do
   end
 
   describe file('/etc/rsyslog.conf') do
-    skip 'This is optional'
+    skip 'Not required for MSB'
     its(:content) { should match(/^\s*\*\.\*\s+@/) }
   end
 end
