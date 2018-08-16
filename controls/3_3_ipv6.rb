@@ -91,7 +91,7 @@ control 'cis-dil-benchmark-3.3.3' do
       if grub_file.exist? && !grub_file.content.nil?
         describe grub_file do
           skip 'Not required for MSB'
-          its(:content) { should match(/ipv6\.disable=1/) }
+          # its(:content) { should match(/ipv6\.disable=1/) }
         end
       end
     end

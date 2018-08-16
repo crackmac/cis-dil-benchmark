@@ -57,8 +57,8 @@ control 'cis-dil-benchmark-1.4.2' do
       if file(f).exist?
         describe file(f) do
           skip 'Not required for MSB'
-          its(:content) { should match(/^set superusers/) }
-          its(:content) { should match(/^password/) }
+          # its(:content) { should match(/^set superusers/) }
+          # its(:content) { should match(/^password/) }
         end
       end
     end
