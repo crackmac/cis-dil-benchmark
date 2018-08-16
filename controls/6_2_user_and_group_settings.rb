@@ -368,7 +368,7 @@ control 'cis-dil-benchmark-6.2.20' do
 
   group_files.each do |f|
     describe etc_group(f).where(name: 'shadow') do
-      its(:user) { should be_empty }
+      its(:users) { should be_empty }
     end
   end
 end
